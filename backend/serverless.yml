@@ -1,6 +1,6 @@
 # TODO: Change the name of the org 
 # Done.
-org: ovi_corp
+org: ovbalaban
 app: serverless-todo-app
 service: serverless-todo-app
 
