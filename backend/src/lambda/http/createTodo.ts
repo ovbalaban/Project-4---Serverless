@@ -1,10 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import 'source-map-support/register'
 import * as middy from 'middy'
-import { cors } from 'middy/middlewares'
+//import { cors } from 'middy/middlewares'
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
 import { getUserId } from '../utils';
 import { createTodo } from '../../helpers/todos'
+import { createLogger } from "../../utils/logger"
+
+const logger = createLogger('createTodo');
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -12,19 +15,18 @@ export const handler = middy(
     // TODO: Implement creating a new TODO item
     //Done
 
+    logger.info('Processing createTodo event', { event })
+
     const userId = getUserId(event)
     const todo = await createTodo(newTodo, userId)
     return {
-      statusCode: 201,
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({
         item: todo
       })
     }
   }
-)
-
-handler.use(
-  cors({
-    credentials: true
-  })
 )
