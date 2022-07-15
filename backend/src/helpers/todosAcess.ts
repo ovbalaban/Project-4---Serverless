@@ -4,8 +4,8 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate';
-import { S3 } from 'aws-sdk'
-import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+//import { S3 } from 'aws-sdk'
+//import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
