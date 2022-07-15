@@ -16,6 +16,7 @@ provider:
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  profile: serverless
 
   tracing:
     lambda: true
@@ -157,7 +158,7 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
     # TODO: Create a DynamoDB table with local secondary index and a composite key
-    TodosTable:
+    TodosTableOvi:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -166,8 +167,6 @@ resources:
           - AttributeName: todoId
             AttributeType: S
           - AttributeName: createdAt
-            AttributeType: S
-          - AttributeName: dueDate
             AttributeType: S
         KeySchema:
           - AttributeName: userId
@@ -190,7 +189,7 @@ resources:
     # TODO: Complete the bucket properties below. 
     # Do not forget to add the CorsConfiguration propoerty
     # Done
-    AttachmentsBucket:
+    AttachmentsBucketOvi:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.ATTACHMENT_S3_BUCKET}
@@ -206,7 +205,7 @@ resources:
                 - POST
                 - DELETE
                 - HEAD
-
+              MaxAge: 3000
     # TODO: Complete the policy below and attach it to the bucket defined above
     # For cross referencing the name of the bucket, use "!Ref AttachmentsBucket"
     # Done
