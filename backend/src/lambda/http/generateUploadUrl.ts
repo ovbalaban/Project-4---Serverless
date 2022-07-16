@@ -9,9 +9,11 @@ import { getUserId } from '../utils'
 import { createLogger } from "../../utils/logger"
 
 const logger = createLogger('generateUploadURL');
+
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Processing generateUploadUrl event', { event })
+    
     const todoId = event.pathParameters.todoId
     const userId = getUserId(event)
 
@@ -20,6 +22,10 @@ export const handler = middy(
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       body: JSON.stringify({
         uploadUrl: url
       })
